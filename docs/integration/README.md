@@ -36,18 +36,38 @@ git -C ~/repos/claude-marketplace pull
 
 Symlinking is the only approach that makes **both commands and skills** available globally with zero per-session effort.
 
+### Automated setup
+
+A setup script handles all of the steps below for you:
+
+```bash
+./docs/integration/symlink.sh
+```
+
+By default it resolves the repo root from the script's own location. To run it from anywhere, or to point at a different clone, set `REPO` explicitly:
+
+```bash
+REPO=~/repos/claude-marketplace ./docs/integration/symlink.sh
+```
+
+The script is idempotent — re-running it after a clone move or a new top-level command/skill directory is added is safe.
+
+### Manual steps
+
+If you prefer to wire things up by hand:
+
 ```bash
 # Create ~/.claude if it doesn't exist yet
 mkdir -p ~/.claude/commands ~/.claude/skills
 
-# Commands — symlinked into the personal commands load path
-ln -s ~/repos/claude-marketplace/.claude/commands ~/.claude/commands/marketplace
+# Commands — symlink each group directly into the personal commands load path
+ln -s ~/repos/claude-marketplace/.claude/commands/git ~/.claude/commands/git
+ln -s ~/repos/claude-marketplace/.claude/commands/issues ~/.claude/commands/issues
+ln -s ~/repos/claude-marketplace/.claude/commands/simple ~/.claude/commands/simple
 
-# Skills — symlinked into the personal skills load path
-ln -s ~/repos/claude-marketplace/.claude/skills ~/.claude/skills/marketplace
+# Skills — symlink each skill directly into the personal skills load path
+ln -s ~/repos/claude-marketplace/.claude/skills/gh-cli ~/.claude/skills/gh-cli
 ```
-
-Both are nested under a `marketplace/` namespace, so they coexist cleanly with any commands or skills you already have.
 
 ### CLAUDE.md
 
@@ -83,11 +103,7 @@ To avoid typing the flag each time, alias it in your shell:
 alias claude='claude --add-dir ~/repos/claude-marketplace'
 ```
 
-**Best for:** making the skills available in a specific context, or testing skill changes without modifying `~/.claude`. If you also need the commands, pair this with the symlink for the `commands/` directory only:
-
-```bash
-ln -s ~/repos/claude-marketplace/.claude/commands ~/.claude/commands/marketplace
-```
+**Best for:** making the skills available in a specific context, or testing skill changes without modifying `~/.claude`. If you also need the commands, pair this with symlinks for the `commands/` subdirectories (or run the setup script).
 
 ---
 
