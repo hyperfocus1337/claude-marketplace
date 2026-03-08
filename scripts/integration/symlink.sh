@@ -45,10 +45,18 @@ success "Ensured $CLAUDE_HOME/{commands,skills}/"
 echo
 
 # ── Commands ─────────────────────────────────────────────────────────────────
+# Create real directories for each namespace, then symlink individual command
+# files inside them — Claude Code doesn't traverse symlinked directories.
 info "Linking commands..."
-for src in "$REPO/.claude/commands"/*/; do
-  [[ -d "$src" ]] || continue
-  symlink "$src" "$CLAUDE_HOME/commands/$(basename "$src")"
+for group_src in "$REPO/.claude/commands"/*/; do
+  [[ -d "$group_src" ]] || continue
+  group="$(basename "$group_src")"
+  group_dst="$CLAUDE_HOME/commands/$group"
+  mkdir -p "$group_dst"
+  for cmd_src in "$group_src"*.md; do
+    [[ -f "$cmd_src" ]] || continue
+    symlink "$cmd_src" "$group_dst/$(basename "$cmd_src")"
+  done
 done
 echo
 
