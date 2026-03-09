@@ -2,8 +2,8 @@
 # symlink.sh — wire .claude from the marketplace repo into ~/.claude
 #
 # Usage:
-#   ./docs/integration/symlink.sh
-#   REPO=/path/to/your/clone ./docs/integration/symlink.sh
+#   ./scripts/integration/symlink.sh
+#   REPO=/path/to/your/clone ./scripts/integration/symlink.sh
 
 set -euo pipefail
 
