@@ -6,11 +6,17 @@ General integration documentation and setup instructions for this repository.
 
 ```
 docs/
-├── mcp/          # MCP server configuration guides
-│   ├── android.md    — Enable MCP servers on Android
-│   ├── desktop.md    — Enable MCP servers on Desktop
-│   └── web.md        — Enable MCP servers on the Web (claude.ai/code)
+├── agents/       # Agent environment and session guides
+│   └── bootstrap.md  — Bootstrapping remote environments (claude.ai/code, CI, containers)
+└── mcp/          # MCP server configuration guides
+    ├── android.md    — Enable MCP servers on Android
+    ├── desktop.md    — Enable MCP servers on Desktop
+    └── web.md        — Enable MCP servers on the Web (claude.ai/code)
 ```
+
+## Agent Environments
+
+The `agents/` folder covers how to configure and prepare Claude Code sessions in remote environments, including session hooks, bootstrap scripts, and MCP server setup.
 
 ## MCP Servers
 
